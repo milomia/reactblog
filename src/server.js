@@ -3,6 +3,22 @@ import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import path from 'path';
 
+[
+    {
+        name: 'learn-react',
+        upvotes: 0,
+        comments: [],
+    }, {
+        name: 'learn-node',
+        upvotes: 0,
+        comments: [],
+    }, {
+        name: 'my-thoughts-on-resumes',
+        upvotes: 0,
+        comments: [],
+    },
+]
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/build')));
@@ -10,7 +26,7 @@ app.use(bodyParser.json());
 
 const withDB = async (operations, res) => {
     try {
-        const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
+        const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true,useUnifiedTopology: true });
         const db = client.db('my-blog');
     
         await operations(db);
